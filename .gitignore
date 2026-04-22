@@ -3,3 +3,4 @@ data/raw/
 logs/
 models/merged/
 models/*.gguf
+__pycache__
