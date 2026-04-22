@@ -39,7 +39,9 @@ def main():
         trust_remote_code=False,
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(ADAPTER_DIR)
+    # Tokenizer must come from the base model, not the LoRA adapter folder.
+    # Some adapter directories omit tokenizer merge metadata needed for GGUF.
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
 
     print(f"Loading LoRA adapter from: {ADAPTER_DIR}")
     model = PeftModel.from_pretrained(model, str(ADAPTER_DIR))

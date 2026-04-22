@@ -2,7 +2,7 @@
 
 **Project:** Generation-Based Pokémon Name & Lore Creator  
 **Date:** 2026-04-22  
-**Status:** Phase 2 Complete
+**Status:** Phase 3 Complete
 
 ---
 
@@ -32,12 +32,15 @@ Build a tool that accepts a short natural-language description (e.g., "A spicy b
 - [x] **Run `train.py`** to fine-tune
 - [x] **Run `merge.py`** to merge adapter
 - [x] **Run `evaluate.py`** to verify quality (target: 8/10 samples)
-- [ ] **Export to GGUF** and load into LM Studio
+- [x] **Export to GGUF** (`models/pokedex-llama3-8b-f16.gguf` → `models/pokedex-llama3-8b-q4.gguf`) and load into LM Studio
 
 ### Phase 3 — Inference Interface
-- [ ] Build a Gradio app that calls LM Studio's OpenAI-compatible endpoint
-- [ ] Input: user description → Output: generated name, type, Pokédex entry
-- [ ] Add basic output validation/filtering
+- [x] Build a Gradio app that calls LM Studio's OpenAI-compatible endpoint — `app.py`
+- [x] Input: user description → Output: generated name, type, Pokédex entry
+- [x] Add basic output validation/filtering — `parse_completion()` in `utils.py` with fallback strings
+- [x] Config externalized to `config.py` + `.env` (LM_STUDIO_BASE_URL, LM_STUDIO_MODEL)
+- [x] `requirements-app.txt` created (gradio, openai, python-dotenv)
+- [x] **Run task 3a** — LM Studio API compatibility verified (`client.models.list()` succeeds via `http://localhost:1234/v1`)
 
 ### Phase 4 — Demo & Polish
 - [ ] Prepare demo examples for seminar presentation
@@ -63,4 +66,6 @@ Build a tool that accepts a short natural-language description (e.g., "A spicy b
 - **Base model used for training:** `NousResearch/Meta-Llama-3-8B-Instruct` (ungated mirror of Llama-3-8B-Instruct) due gated-access restrictions on the Meta repository for the current account.
 - **Training result (Phase 2):** `train.py` completed 3 epochs successfully; final train loss ~1.149, eval loss ~1.071, eval mean token accuracy ~0.75.
 - **Evaluation result:** `evaluate.py` passed 10/10 samples on the current quality bar.
+- **LM Studio API check (task 3a):** Passed with `openai` Python SDK v1+ (`client.models.list()`), LM Studio CLI version `v0.0.47`.
+- **LM Studio load + generation check:** `models/pokedex-llama3-8b-q4.gguf` loaded with identifier `pokedex-llama3-8b-q4`; end-to-end `chat.completions.create(...)` returns valid `[Name]/[Type]/[Entry]` output.
 
