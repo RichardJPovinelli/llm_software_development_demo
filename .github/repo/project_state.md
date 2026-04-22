@@ -22,12 +22,17 @@ Build a tool that accepts a short natural-language description (e.g., "A spicy b
 - [x] Run `build_corpus.py` — 8,490 records; train=6,792 / val=849 / test=849
 
 ### Phase 2 — Fine-Tuning & Model Export
-- [ ] Set up training environment (`transformers`, `peft`, `bitsandbytes`, `trl`, `accelerate`)
-- [ ] Write `train.py`: load Llama-3-8B in 4-bit, apply QLoRA, train with `SFTTrainer`, save LoRA adapter to `models/lora-adapter/`
-- [ ] Write `merge.py`: merge LoRA adapter into base model, save to `models/merged/`
-- [ ] Write `evaluate.py`: run inference on test set, review 10 sample outputs
-- [ ] Export merged model to GGUF (Q4_K_M) using `llama.cpp`, save to `models/pokedex-llama3-8b-q4.gguf`
-- [ ] Load GGUF into LM Studio and verify it loads without errors
+- [x] Set up training environment (`transformers`, `peft`, `bitsandbytes`, `trl`, `accelerate`) — `requirements-train.txt`
+- [x] Write `train.py`: load Llama-3-8B in 4-bit, apply QLoRA, train with `SFTTrainer`, save LoRA adapter to `models/lora-adapter/`
+- [x] Write `merge.py`: merge LoRA adapter into base model, save to `models/merged/`
+- [x] Write `evaluate.py`: run inference on test set, review 10 sample outputs
+- [x] Document GGUF export steps — `models/README.md` (pinned llama.cpp commit: b3796)
+- [ ] **Install training deps** (`pip install torch --index-url ... && pip install -r requirements-train.txt`)
+- [ ] **Run dry-run GGUF export** on base model (confirms toolchain before training)
+- [ ] **Run `train.py`** to fine-tune
+- [ ] **Run `merge.py`** to merge adapter
+- [ ] **Run `evaluate.py`** to verify quality (target: 8/10 samples)
+- [ ] **Export to GGUF** and load into LM Studio
 
 ### Phase 3 — Inference Interface
 - [ ] Build a Gradio app that calls LM Studio's OpenAI-compatible endpoint

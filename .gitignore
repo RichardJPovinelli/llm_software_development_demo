@@ -1,2 +1,6 @@
 .venv/
 data/raw/
+models/lora-adapter/
+models/merged/
+models/*.gguf
+logs/
