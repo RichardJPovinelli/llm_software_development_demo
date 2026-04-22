@@ -60,3 +60,13 @@
 **Rationale:** Explicit field labels help the model learn structured generation and make inference-time prompting predictable.  
 **Status:** Proposed — confirm before fine-tuning begins.
 
+---
+
+## DEC-007 — Use ungated Llama-3 mirror for training
+**Date:** 2026-04-22  
+**Decision:** Use `NousResearch/Meta-Llama-3-8B-Instruct` as the training base model in place of `meta-llama/Meta-Llama-3-8B-Instruct`.  
+**Rationale:** The active Hugging Face account has a valid token but does not have gated access approval for the Meta-hosted repository, causing 403 errors at model download time. The NousResearch mirror provides the same architecture/weights family and unblocks local QLoRA fine-tuning workflow immediately.  
+**Implications:**
+- `train.py` and `merge.py` use the ungated model ID.
+- Repro steps should mention this model ID unless Meta access is later approved.
+

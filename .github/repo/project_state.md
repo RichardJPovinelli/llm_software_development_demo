@@ -2,7 +2,7 @@
 
 **Project:** Generation-Based Pokémon Name & Lore Creator  
 **Date:** 2026-04-22  
-**Status:** Planning
+**Status:** Phase 2 Complete
 
 ---
 
@@ -27,11 +27,11 @@ Build a tool that accepts a short natural-language description (e.g., "A spicy b
 - [x] Write `merge.py`: merge LoRA adapter into base model, save to `models/merged/`
 - [x] Write `evaluate.py`: run inference on test set, review 10 sample outputs
 - [x] Document GGUF export steps — `models/README.md` (pinned llama.cpp commit: b3796)
-- [ ] **Install training deps** (`pip install torch --index-url ... && pip install -r requirements-train.txt`)
+- [x] **Install training deps** (`pip install torch --index-url ... && pip install -r requirements-train.txt`)
 - [ ] **Run dry-run GGUF export** on base model (confirms toolchain before training)
-- [ ] **Run `train.py`** to fine-tune
-- [ ] **Run `merge.py`** to merge adapter
-- [ ] **Run `evaluate.py`** to verify quality (target: 8/10 samples)
+- [x] **Run `train.py`** to fine-tune
+- [x] **Run `merge.py`** to merge adapter
+- [x] **Run `evaluate.py`** to verify quality (target: 8/10 samples)
 - [ ] **Export to GGUF** and load into LM Studio
 
 ### Phase 3 — Inference Interface
@@ -60,4 +60,7 @@ Build a tool that accepts a short natural-language description (e.g., "A spicy b
 - **Inference host:** LM Studio (local, OpenAI-compatible API). The application calls LM Studio as it would call OpenAI.
 - **Hardware:** NVIDIA A4000 (16GB VRAM), 128GB system RAM. Fine-tuning via QLoRA on the A4000 is feasible for Llama-3-8B.
 - **Serving model:** Fine-tuned GGUF (quantized) loaded into LM Studio post-training.
+- **Base model used for training:** `NousResearch/Meta-Llama-3-8B-Instruct` (ungated mirror of Llama-3-8B-Instruct) due gated-access restrictions on the Meta repository for the current account.
+- **Training result (Phase 2):** `train.py` completed 3 epochs successfully; final train loss ~1.149, eval loss ~1.071, eval mean token accuracy ~0.75.
+- **Evaluation result:** `evaluate.py` passed 10/10 samples on the current quality bar.
 

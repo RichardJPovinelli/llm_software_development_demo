@@ -1,6 +1,6 @@
 # Models
 
-This directory is excluded from version control (see `.gitignore`).
+The LoRA adapter weights (`lora-adapter/`) are tracked in version control. The large derived artifacts — `merged/` and `.gguf` files — are excluded by `.gitignore` and must be reconstructed locally (see instructions below).
 
 ## Expected contents after Phase 2
 
@@ -75,7 +75,25 @@ llama.cpp/build/bin/llama-quantize \
 
 ---
 
+## Reconstructing the Model from the LoRA Adapter
+
+After cloning the repository, the `lora-adapter/` weights are present but the merged model and GGUF file must be rebuilt.
+
+### Step A — Merge the adapter into the base model
+
+```bash
+python merge.py
+```
+
+This downloads `NousResearch/Meta-Llama-3-8B-Instruct` from HuggingFace (requires internet access and ~16 GB disk space) and writes the merged bf16 model to `models/merged/`.
+
+### Step B — Convert and quantize to GGUF
+
+Follow **Steps 1, 3, and 4** of the GGUF Export Instructions above to produce `models/pokedex-llama3-8b-q4.gguf`.
+
+---
+
 ## Notes
 
-- Do not commit `.gguf` files or `merged/` — they are large and reproducible from the training scripts.
-- The `lora-adapter/` directory is also excluded; back it up externally if needed.
+- `models/merged/` and `*.gguf` files are excluded from version control — they are large and fully reproducible from `lora-adapter/` using the steps above.
+- `lora-adapter/` is tracked in git and is the only artifact that needs to be saved.
